@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="除了控制台外，以太坊还支持用脚本与geth交互。除了JS外，还支持Python、PHP Java等。">
+<meta name="keywords" content="区块链,以太坊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用脚本与以太坊交互">
+<meta property="og:url" content="sudobash.cn/post/blockchain/2018/04/blockchain/eth-interacting-in-scripts.html">
+<meta property="og:site_name" content="Web开发笔记">
+<meta property="og:description" content="除了控制台外，以太坊还支持用脚本与geth交互。除了JS外，还支持Python、PHP Java等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-19T05:17:04.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用脚本与以太坊交互">
+<meta name="twitter:description" content="除了控制台外，以太坊还支持用脚本与geth交互。除了JS外，还支持Python、PHP Java等。">
+
+
+
+
+
+
+  <link rel="canonical" href="sudobash.cn/post/blockchain/2018/04/blockchain/eth-interacting-in-scripts.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用脚本与以太坊交互 | Web开发笔记</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4921dd99e49896e2d95d6f737bf8e9fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Web开发笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开发者的点滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-编程语言">
+    <a href="/categories/coding/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-code"></i> <br />编程语言</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-工作点滴">
+    <a href="/categories/in-work/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tasks"></i> <br />工作点滴</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-服务运维">
+    <a href="/categories/devops/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-cogs"></i> <br />服务运维</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-区块链">
+    <a href="/categories/blockchain/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />区块链</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-阅读">
+    <a href="/categories/read/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br />阅读</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-随笔">
+    <a href="/categories/writing/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />随笔</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/blockchain/2018/04/blockchain/eth-interacting-in-scripts.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用脚本与以太坊交互</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T00:00:00+08:00">2018-04-03</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blockchain/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>除了控制台外，以太坊还支持用脚本与geth交互。除了JS外，还支持Python、PHP Java等。</p>
+<a id="more"></a>
+<h2 id="以太坊的交互方式"><a href="#以太坊的交互方式" class="headerlink" title="以太坊的交互方式"></a>以太坊的交互方式</h2><p>与以太坊的交互有好几种：</p>
+<ul>
+<li>geth控制台</li>
+<li>mist钱包</li>
+<li>node命令行</li>
+<li>node运行js脚本</li>
+<li>php 、Python and so on</li>
+</ul>
+<p>然而归根到底就分两种：在geth控制台中交互 或者 通过其他方式与geth交互。</p>
+<p>geth集成了node的控制台，并且封装了<code>web3.js</code>的类库，用于操作本地的以太坊节点或与远程节点通信。因此js开发可以直接引用web3的类库。然后又陆续开发了其他语言的web3类库，相当于开放的<code>sdk</code>或者类库，只要引用就能用之与以太坊节点交互，交互对象就是geth提供的<code>rpc</code>服务。</p>
+<p>geth本身支持<code>rpc</code>、<code>websocket</code>等通讯方式，本文介绍的js使用的是<code>rpc</code>方式。</p>
+<blockquote>
+<p>web3寓意web3.0，旨在为互联网更新换代，实现价值互联……真是雄心壮志</p>
+</blockquote>
+<h2 id="JS与geth交互"><a href="#JS与geth交互" class="headerlink" title="JS与geth交互"></a>JS与geth交互</h2><p>JS交互需要搭建node环境，<strong>尤其是环境变量的设置</strong>.参考 <a href="/post/coding/2018/04/coding/node-env-2018.html" title="node环境搭建">node环境搭建</a></p>
+<p>geth内部集成了node的控制台，在以太坊上的操作大多数操作都是通过web3模块来进行的，按理说js与node的交互应当是水到渠成的。然而node的web3安装却磨难重重。</p>
+<div class="note warning"><p>geth内部集成的web3是0.2版，但是npm 默认安装的是1.0版本的，1.0还没有release 所以不指定版本安装可能会出现各种各样的问题！ </p></div>
+
+鉴于`1.0`各种安装出错，并且跟geth不一致，还是装`0.2`版本比较好。mac和win下都能正常安装，唯独linxu下麻烦不断。
+
+<div class="note danger"><p>最终发现linux下的web3要用普通用户进行全局安装，不能用root。 如果权限受限，要执行chmod 777 $NODE_PATH </p></div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装web3</span></span><br><span class="line">npm intall -g web3@^0.20.1</span><br><span class="line"></span><br><span class="line"><span class="comment">#运行一个geth孤点 开启rpc和控制台</span></span><br><span class="line"><span class="comment">#如果不适用metamask部署而是直接部署，启动geth要去掉--nodiscover参数</span></span><br><span class="line">geth --nodiscover console --rpc --rpcapi <span class="string">'web3,eth,debug'</span> --rpcport 8545 --rpccorsdomain <span class="string">'*'</span></span><br></pre></td></tr></table></figure>
+<p>web3成功的标志是：<strong>进入node控制台，能require到web3</strong></p>
+<p>编写 <code>interact.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取web3对象 </span></span><br><span class="line"><span class="keyword">var</span> web3 = <span class="built_in">require</span>(<span class="string">'web3'</span>)</span><br><span class="line">web3 = <span class="keyword">new</span> web3()</span><br><span class="line">web3.setProvider( <span class="keyword">new</span> web3.providers.HttpProvider(<span class="string">'http://127.0.0.1:8545'</span>) )</span><br><span class="line"><span class="keyword">var</span> eth = web3.eth</span><br><span class="line"></span><br><span class="line"><span class="comment">//geth中自动操作了上面的步骤，所以如果在geth中直接可以使用web3和eth</span></span><br><span class="line"><span class="comment">//以下步骤在geth中操作和使用node执行js效果是一样的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myAcc = eth.accounts[<span class="number">0</span>] <span class="comment">//用于部署合约的账户</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//然后就可以使用 abi + bytecode 部署合约了</span></span><br><span class="line"><span class="keyword">var</span> abi = [&#123;....&#125;]</span><br><span class="line"><span class="keyword">var</span> bytecode = <span class="string">'0xsssssssssss'</span></span><br><span class="line"><span class="keyword">var</span> contractParam1,  contractParam2 <span class="comment">//智能合约构造函数的参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可以生成部署的操作码 在用metamask广播部署</span></span><br><span class="line"><span class="keyword">var</span> contractCode = eth.contract(abi).new.getData(contractParam1, contractParam2, &#123;</span><br><span class="line">	<span class="keyword">from</span>:myAcc, </span><br><span class="line">	data:bytecode</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//有条件的可以直接部署。（有条件是指可以使用eth.getBalance()可以查到足够的余额）</span></span><br><span class="line"><span class="keyword">var</span> contract = eth.contract(abi).new(contractParam1, contractParam2, &#123;</span><br><span class="line">	<span class="keyword">from</span>:myAcc, </span><br><span class="line">	data:bytecode</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>使用node执行该文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node interact.js</span><br></pre></td></tr></table></figure></p>
+<p>更多API参考见 <a href="https://github.com/ethereum/wiki/wiki/JavaScript-API" target="_blank" rel="noopener"><code>0.2</code>版本文档</a></p>
+<h2 id="PHP与geth交互"><a href="#PHP与geth交互" class="headerlink" title="PHP与geth交互"></a>PHP与geth交互</h2><p>php要7.1 </p>
+<p>Github:<a href="https://github.com/sc0Vu/web3.php" target="_blank" rel="noopener">https://github.com/sc0Vu/web3.php</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/blockchain/" rel="tag"># 区块链</a>
+          
+            <a href="/tags/ethereum/" rel="tag"># 以太坊</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/coding/2018/04/coding/node-env-2018.html" rel="next" title="node环境搭建">
+                <i class="fa fa-chevron-left"></i> node环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/blockchain/2018/04/blockchain/eth-interact-with-contract.html" rel="prev" title="以太坊与智能合约交互">
+                以太坊与智能合约交互 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tyler</p>
+              <p class="site-description motion-element" itemprop="description">web开发 | javascript | js | php | node | nginx | mysql | linux</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以太坊的交互方式"><span class="nav-number">1.</span> <span class="nav-text">以太坊的交互方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS与geth交互"><span class="nav-number">2.</span> <span class="nav-text">JS与geth交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP与geth交互"><span class="nav-number">3.</span> <span class="nav-text">PHP与geth交互</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyler</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.1.0</div>
+
+
+
+
+<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

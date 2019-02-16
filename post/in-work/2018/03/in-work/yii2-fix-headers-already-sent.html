@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="先上解决方案，后面是复现场景。">
+<meta name="keywords" content="yii2,php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yii2 中解决 header already send错误">
+<meta property="og:url" content="sudobash.cn/post/in-work/2018/03/in-work/yii2-fix-headers-already-sent.html">
+<meta property="og:site_name" content="Web开发笔记">
+<meta property="og:description" content="先上解决方案，后面是复现场景。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-19T05:17:04.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yii2 中解决 header already send错误">
+<meta name="twitter:description" content="先上解决方案，后面是复现场景。">
+
+
+
+
+
+
+  <link rel="canonical" href="sudobash.cn/post/in-work/2018/03/in-work/yii2-fix-headers-already-sent.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Yii2 中解决 header already send错误 | Web开发笔记</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4921dd99e49896e2d95d6f737bf8e9fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Web开发笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开发者的点滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-编程语言">
+    <a href="/categories/coding/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-code"></i> <br />编程语言</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-工作点滴">
+    <a href="/categories/in-work/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tasks"></i> <br />工作点滴</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-服务运维">
+    <a href="/categories/devops/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-cogs"></i> <br />服务运维</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-区块链">
+    <a href="/categories/blockchain/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />区块链</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-阅读">
+    <a href="/categories/read/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br />阅读</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-随笔">
+    <a href="/categories/writing/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />随笔</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/in-work/2018/03/in-work/yii2-fix-headers-already-sent.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Yii2 中解决 header already send错误</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T00:00:00+08:00">2018-03-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/in-work/" itemprop="url" rel="index"><span itemprop="name">工作点滴</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先上解决方案，后面是复现场景。</p>
+<a id="more"></a>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>用yii2自己的响应器来管理header和输出内容。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$response = Yii::$app-&gt;getResponse();</span><br><span class="line">$response-&gt;getHeaders()-&gt;add(<span class="string">'Content-Type'</span>, <span class="string">'application/json;charset=utf-8'</span>);</span><br><span class="line">$response-&gt;content = json_encode($responsData);</span><br><span class="line">Yii::$app-&gt;end();</span><br></pre></td></tr></table></figure></p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>用yii2开发的API，在frontend中新建了一个module，将错误捕获也放在了module中。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApiModule</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">base</span>\<span class="title">Module</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">parent</span>::init();</span><br><span class="line"></span><br><span class="line">		\Yii::$app-&gt;errorHandler-&gt;errorAction = <span class="string">'/v1/default/error'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultController</span> <span class="keyword">extends</span> <span class="title">IController</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionError</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (($exception = \Yii::$app-&gt;getErrorHandler()-&gt;exception) === <span class="keyword">null</span>) &#123;</span><br><span class="line">			$exception = <span class="keyword">new</span> \yii\web\NotFoundHttpException(Yii::t(<span class="string">'yii'</span>, <span class="string">'Page not found.'</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;jsonOut(<span class="number">1001</span>, $exception-&gt;getMessage());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IController</span> <span class="keyword">extends</span> <span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">json</span><span class="params">($arr=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">		header(<span class="string">"Content-Type: application/json;charset=utf-8"</span>);</span><br><span class="line">		<span class="keyword">echo</span> json_encode($arr);</span><br><span class="line">		Yii::$app-&gt;end();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本来希望捕获错误后输出json结果后就结束。可是结果后面总是跟着一堆exception，提示<code>Headers already sent</code>。 不仅如此，连带被捕获的错误也报出来了。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">An Error occurred while handling another error:</span><br><span class="line">exception &apos;yii\web\HeadersAlreadySentException&apos; with message &apos;Headers already sent in D:\path\to\project\common\components\IController.php on line 43.&apos; in D:\path\to\project\vendor\yiisoft\yii2\web\Response.php:366</span><br><span class="line">Stack trace:</span><br><span class="line">#0 D:\path\to\project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response-&gt;sendHeaders()</span><br><span class="line">#1 D:\path\to\project\vendor\yiisoft\yii2\base\Application.php(656): yii\web\Response-&gt;send()</span><br><span class="line">#2 D:\path\to\project\common\components\IController.php(44): yii\base\Application-&gt;end()</span><br><span class="line">#3 D:\path\to\project\common\components\IController.php(49): common\components\IController-&gt;json(Array)</span><br><span class="line">#4 D:\path\to\project\frontend\modules\v1\controllers\DefaultController.php(14): common\components\IController-&gt;jsonOut(1001, &apos;\xE9\xA1\xB5\xE9\x9D\xA2\xE6\x9C\xAA\xE6\x89\xBE\xE5\x88\xB0...&apos;)</span><br><span class="line">#5 [internal function]: app\modules\v1\controllers\DefaultController-&gt;actionError()</span><br><span class="line">#6 D:\path\to\project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)</span><br><span class="line">#7 D:\path\to\project\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction-&gt;runWithParams(Array)</span><br><span class="line">#8 D:\path\to\project\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller-&gt;runAction(&apos;error&apos;, Array)</span><br><span class="line">#9 D:\path\to\project\vendor\yiisoft\yii2\web\ErrorHandler.php(108): yii\base\Module-&gt;runAction(&apos;/v1/default/err...&apos;)</span><br><span class="line">#10 D:\path\to\project\vendor\yiisoft\yii2\base\ErrorHandler.php(111): yii\web\ErrorHandler-&gt;renderException(Object(yii\web\NotFoundHttpException))</span><br><span class="line">#11 [internal function]: yii\base\ErrorHandler-&gt;handleException(Object(yii\web\NotFoundHttpException))</span><br><span class="line">#12 &#123;main&#125;</span><br><span class="line">Previous exception:</span><br><span class="line">exception &apos;yii\base\InvalidRouteException&apos; with message &apos;Unable to resolve the request: v1/default/&apos; in D:\path\to\project\vendor\yiisoft\yii2\base\Controller.php:128</span><br><span class="line">Stack trace:</span><br><span class="line">#0 D:\path\to\project\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller-&gt;runAction(&apos;&apos;, Array)</span><br><span class="line">#1 D:\path\to\project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module-&gt;runAction(&apos;v1/&apos;, Array)</span><br><span class="line">#2 D:\path\to\project\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application-&gt;handleRequest(Object(yii\web\Request))</span><br><span class="line">#3 D:\path\to\project\frontend\web\index.php(17): yii\base\Application-&gt;run()</span><br><span class="line">#4 &#123;main&#125;</span><br><span class="line"></span><br><span class="line">Next exception &apos;yii\web\NotFoundHttpException&apos; with message &apos;页面未找到。&apos; in D:\path\to\project\vendor\yiisoft\yii2\web\Application.php:115</span><br><span class="line">Stack trace:</span><br><span class="line">#0 D:\path\to\project\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application-&gt;handleRequest(Object(yii\web\Request))</span><br><span class="line">#1 D:\path\to\project\frontend\web\index.php(17): yii\base\Application-&gt;run()</span><br><span class="line">#2 &#123;main&#125;</span><br></pre></td></tr></table></figure></p>
+<p>于是推断是<code>echo</code>之后，<code>Yii::$app-&gt;end()</code>中再次发送了header，所以触发报错，将exception的栈都连带出来了。于是不直接输出，而是将结果交给yii自带的响应器。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IController</span> <span class="keyword">extends</span> <span class="title">yii</span>\<span class="title">web</span>\<span class="title">Controller</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">json</span><span class="params">($arr=array<span class="params">()</span>)</span></span>&#123;</span><br><span class="line">		$response = Yii::$app-&gt;getResponse();</span><br><span class="line">		$response-&gt;getHeaders()-&gt;add(<span class="string">'Content-Type'</span>, <span class="string">'application/json;charset=utf-8'</span>);</span><br><span class="line">		$response-&gt;content = json_encode($arr);</span><br><span class="line">		Yii::$app-&gt;end();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/yii2/" rel="tag"># yii2</a>
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/writing/2018/03/writing/death-of-Stephen-hawking.html" rel="next" title="霍金去世">
+                <i class="fa fa-chevron-left"></i> 霍金去世
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/blockchain/2018/03/blockchain/eth-data.html" rel="prev" title="以太坊资料整理">
+                以太坊资料整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tyler</p>
+              <p class="site-description motion-element" itemprop="description">web开发 | javascript | js | php | node | nginx | mysql | linux</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">1.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">2.</span> <span class="nav-text">场景</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyler</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.1.0</div>
+
+
+
+
+<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

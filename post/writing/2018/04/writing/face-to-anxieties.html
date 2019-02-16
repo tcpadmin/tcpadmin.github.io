@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="《摩拜创始人套现15亿:你的同龄人,正在抛弃你》这篇文章发布不久就刷爆朋友圈，同时被各方声讨。虽然我没有看这篇文章，但从标题不难猜出文章主旨是：别人都多厉害了，你还这么怂。 现在该文章已然成了贩卖焦虑的代表。如今风头已过，冷静下来的人大概也能想明白：这篇文章在焦虑上没讲错什么。 是的，我觉得这篇文章是对的，现在这种贩卖焦虑的文章虽然很多，但讲的都是事实。无论大家如何讨厌这篇文章贩卖焦虑的行文，焦虑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="直面焦虑">
+<meta property="og:url" content="sudobash.cn/post/writing/2018/04/writing/face-to-anxieties.html">
+<meta property="og:site_name" content="Web开发笔记">
+<meta property="og:description" content="《摩拜创始人套现15亿:你的同龄人,正在抛弃你》这篇文章发布不久就刷爆朋友圈，同时被各方声讨。虽然我没有看这篇文章，但从标题不难猜出文章主旨是：别人都多厉害了，你还这么怂。 现在该文章已然成了贩卖焦虑的代表。如今风头已过，冷静下来的人大概也能想明白：这篇文章在焦虑上没讲错什么。 是的，我觉得这篇文章是对的，现在这种贩卖焦虑的文章虽然很多，但讲的都是事实。无论大家如何讨厌这篇文章贩卖焦虑的行文，焦虑">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-19T05:17:04.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="直面焦虑">
+<meta name="twitter:description" content="《摩拜创始人套现15亿:你的同龄人,正在抛弃你》这篇文章发布不久就刷爆朋友圈，同时被各方声讨。虽然我没有看这篇文章，但从标题不难猜出文章主旨是：别人都多厉害了，你还这么怂。 现在该文章已然成了贩卖焦虑的代表。如今风头已过，冷静下来的人大概也能想明白：这篇文章在焦虑上没讲错什么。 是的，我觉得这篇文章是对的，现在这种贩卖焦虑的文章虽然很多，但讲的都是事实。无论大家如何讨厌这篇文章贩卖焦虑的行文，焦虑">
+
+
+
+
+
+
+  <link rel="canonical" href="sudobash.cn/post/writing/2018/04/writing/face-to-anxieties.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>直面焦虑 | Web开发笔记</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4921dd99e49896e2d95d6f737bf8e9fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Web开发笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开发者的点滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-编程语言">
+    <a href="/categories/coding/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-code"></i> <br />编程语言</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-工作点滴">
+    <a href="/categories/in-work/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tasks"></i> <br />工作点滴</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-服务运维">
+    <a href="/categories/devops/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-cogs"></i> <br />服务运维</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-区块链">
+    <a href="/categories/blockchain/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />区块链</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-阅读">
+    <a href="/categories/read/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br />阅读</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-随笔">
+    <a href="/categories/writing/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />随笔</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/writing/2018/04/writing/face-to-anxieties.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">直面焦虑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T00:00:00+08:00">2018-04-22</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/writing/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《摩拜创始人套现15亿:你的同龄人,正在抛弃你》这篇文章发布不久就刷爆朋友圈，同时被各方声讨。虽然我没有看这篇文章，但从标题不难猜出文章主旨是：别人都多厉害了，你还这么怂。</p>
+<p>现在该文章已然成了贩卖焦虑的代表。如今风头已过，冷静下来的人大概也能想明白：这篇文章在焦虑上没讲错什么。</p>
+<p>是的，我觉得这篇文章是对的，现在这种贩卖焦虑的文章虽然很多，<strong>但讲的都是事实</strong>。无论大家如何讨厌这篇文章贩卖焦虑的行文，<strong>焦虑都不会因为讨厌或者无视就自行消失</strong>。<br><a id="more"></a></p>
+<h2 id="焦虑源于欲望"><a href="#焦虑源于欲望" class="headerlink" title="焦虑源于欲望"></a>焦虑源于欲望</h2><p>人的焦虑不是别人给的，是来自自己的欲望。而欲望是信息化社会，最无法逃避的东西。是海量的信息，让我们看到了更多的选择和机会，然而对大多数人来讲这些机会更像是水中月，镜中花，是可望而不可及的，落差之下，很多人于是陷入焦虑。</p>
+<p>这些焦虑在欲望中滋生，在交际圈的攀比中放大，在一篇篇文章中被引爆。引爆过后，又有反对的声音来灭火，来安抚。虽然这些文章同样是为了赚钱的打赏文，但毕竟走的是“安抚普通人脆弱的内心”的路线，满足了大众<strong>通过诋毁文章来逃避现实</strong>的需求，因此颇受大众认同。然而来来往往的风不断吹，大多数人就只能在各种洗脑文中死去活来。</p>
+<p>这不是根本的解决办法！既然焦虑来自于欲望，根本解决焦虑的办法就两个：<strong>要么控制欲望，要么满足欲望。</strong></p>
+<p>很多公共号在呼吁的：<strong>人要有独立思考能力。</strong>的确，有独立思考能力的人，更容易<strong>正视并控制自己的欲望</strong>，所以能减轻甚至消除自己的焦虑。</p>
+<p>然而人是社会人，每天打交道的更多的还是普通人。自己洁身自好容易，拖家带口让一家子都有独立思考能力，都能控制欲望，在互联网如此发达的今天，似乎就不那么容易了。<br>要能说服一家老小，并且能让一家老小不被说服。除了言传身教还得别人信服。这样的话语权不可能是凭空来的，往往还是要靠实力来证明的，或多或少。</p>
+<p>所以对于普通人来说，减轻焦虑既要加强精神文明建设来抵制焦虑贩卖商的狂轰滥炸，又要加强经济建设为精神文明构造强大的物质保障。</p>
+<p>然而我觉现在的焦虑只是开始。</p>
+<h2 id="焦虑只是开始"><a href="#焦虑只是开始" class="headerlink" title="焦虑只是开始"></a>焦虑只是开始</h2><p>韩寒说这篇文章简直是在制造恐慌，可我觉得这篇文章还不足够令人恐慌，因为我读过更令人恐慌的。</p>
+<blockquote>
+<p>一个场景：2067年，80岁的小明办理了退休，确实老了，自己的DNA健全程度越来越差，疾病和癌变始终伴随着他。虽然寿命快到了，可是家里还有110岁的老娘要赡养，自己买不起延寿的药物，更换不起器官和身体，只能慢慢走向死亡。公司里的健身房，癌症痊愈后的董事长还在美女教练的陪伴下举铁，110多岁的人了，花了15亿更换了心肺，注射了 1针2000万的抗衰老药物，如今看起来和50岁的人差不多。</p>
+</blockquote>
+<p>上面那段话出自<a href="http://m.kdnet.net/share-12637348.html" target="_blank" rel="noopener">这里</a> 这篇文章2017年就发过一次，当时还没这么耸人听闻。</p>
+<p>信息化带来了水月镜花的机会，也带来看开眼看世界的机会。我们能看到的不仅有挣钱的机会，还有<strong>挣命的机会</strong>。虽然文章有些夸张嫌疑，但是现在我们所看到的世界，就是未来的雏形：<strong>现在的医疗资源的差距就是寿命的差距。</strong></p>
+<p>小地方的医疗条件和大城市医院是不可比的。而且这世界上还有更好的医疗设备和资源。有些甚至是还在研制中没有上市的药，有资源才能搞来，虽然不一定能救命，但总归多了一线希望。而这一个个救命的希望也是一台台钞票粉碎机。在以前，面对绝症人们要面对的只有绝望和悲痛，而如今却还要经受现实和良心的煎熬：一边是包含期望目光的病床上的亲人，另一边是临近崩溃的家庭，甚至不止一个家庭。然而最痛苦的可能却是倾家荡产负债累累依然回天乏术！</p>
+<p>资源永远是有限的。现在还只是焦虑，将来可能就是煎熬。</p>
+<p>所谓的尊重平凡，未必不是懒惰的借口。以前的智人是要凭本事生存的，而如今人们可以凭福利生存。前者靠自己赢得地位，后者靠别人施舍地位。</p>
+<p>一旦依赖了别人，就会有没玩完没了的“身不由己”。就像现在的叙利亚，联合国五常都保不了它，甚至还要打它，它或许几百年都再无翻身之力。</p>
+<p>焦虑不是别人贩卖来的，是生命与生俱来的。生命生下来就是竞争，不想惨烈地竞争，可以强大内心愉快地竞争，但不能不竞争。</p>
+<p>面对这样的未来，拿出命来拼才是正途。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/writing/2018/04/writing/fight-for-chicken-soup-for-the-soul.html" rel="next" title="为鸡汤翻盘">
+                <i class="fa fa-chevron-left"></i> 为鸡汤翻盘
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/coding/2018/04/coding/golang/go-type-transfer.html" rel="prev" title="Go类型转换和断言总结">
+                Go类型转换和断言总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tyler</p>
+              <p class="site-description motion-element" itemprop="description">web开发 | javascript | js | php | node | nginx | mysql | linux</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#焦虑源于欲望"><span class="nav-number">1.</span> <span class="nav-text">焦虑源于欲望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#焦虑只是开始"><span class="nav-number">2.</span> <span class="nav-text">焦虑只是开始</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyler</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.1.0</div>
+
+
+
+
+<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

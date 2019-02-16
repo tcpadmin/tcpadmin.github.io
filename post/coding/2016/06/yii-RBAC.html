@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Yii的RBAC隐藏得比较深，而且直接用不太好用。 但是由于其基本功能很完善，因此只需后续少许开发就能真正使用，而且非常好用。">
+<meta name="keywords" content="PHP,yii">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yii的授权-RBAC">
+<meta property="og:url" content="sudobash.cn/post/coding/2016/06/yii-RBAC.html">
+<meta property="og:site_name" content="Web开发笔记">
+<meta property="og:description" content="Yii的RBAC隐藏得比较深，而且直接用不太好用。 但是由于其基本功能很完善，因此只需后续少许开发就能真正使用，而且非常好用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-19T05:17:04.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yii的授权-RBAC">
+<meta name="twitter:description" content="Yii的RBAC隐藏得比较深，而且直接用不太好用。 但是由于其基本功能很完善，因此只需后续少许开发就能真正使用，而且非常好用。">
+
+
+
+
+
+
+  <link rel="canonical" href="sudobash.cn/post/coding/2016/06/yii-RBAC.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Yii的授权-RBAC | Web开发笔记</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4921dd99e49896e2d95d6f737bf8e9fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Web开发笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开发者的点滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-编程语言">
+    <a href="/categories/coding/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-code"></i> <br />编程语言</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-工作点滴">
+    <a href="/categories/in-work/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tasks"></i> <br />工作点滴</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-服务运维">
+    <a href="/categories/devops/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-cogs"></i> <br />服务运维</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-区块链">
+    <a href="/categories/blockchain/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />区块链</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-阅读">
+    <a href="/categories/read/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br />阅读</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-随笔">
+    <a href="/categories/writing/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />随笔</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/coding/2016/06/yii-RBAC.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Yii的授权-RBAC</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-18T00:00:00+08:00">2016-06-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Yii的RBAC隐藏得比较深，而且直接用不太好用。<br> 但是由于其基本功能很完善，因此只需后续少许开发就能真正使用，而且非常好用。</p>
+<a id="more"></a>
+<h2 id="授权单位-AuthItem"><a href="#授权单位-AuthItem" class="headerlink" title="授权单位 - AuthItem"></a>授权单位 - AuthItem</h2><p>一个AuthItem就是一个做某件事的许可。<br> Yii中设定了不同粒度的AuthItem：operation（操作）、task（任务）、role（角色），一般来说：</p>
+<ol>
+<li>Operation是最小的，不可再分的AuthItem </li>
+<li>Task是一个或多个operation组成的AuthItem </li>
+<li>Role是一个或多个task组成的AuthItem</li>
+</ol>
+<p>Yii中并未对三类AuthItem做强行限制，因此实际上有时候一个role也可能由operation组成，甚至由operation和task混合组成。<br> 但Yii做了另外的限制&mdash;&mdash;小粒度不能包含大粒度的子项，即：一个task不能包含role子项，一个operation也不能包含task或role子项。</p>
+<h2 id="AuthManager"><a href="#AuthManager" class="headerlink" title="AuthManager"></a>AuthManager</h2><p>有了AuthItem，就要有授权操作（assign）和权限检查（checkAccess）。<br>Yii中权限的授予（assign）、判定（checkAccess）、撤销（revoke）的操作，以及创建AuthItem的操作都依赖于authManager。</p>
+<p>一个Yii的webapp中必定有一个authManager的组件。该组件是一个继承自CAuthManager的一个类。这个类要能实现以下功能：</p>
+<ol>
+<li>AuthItem（即operation、task、role）的增删改查 </li>
+<li>授权关系（assignment）的增删改查 </li>
+<li>AuthItem父子关系的增删改查</li>
+</ol>
+<p>Yii自带了两个实现以上功能的类：CPhpAuthManager类和CDbAuthManager类。<br>它们的区别在于CPhpAuthManger将授权数据都保存到一个php文件中，而CDbAuthManager将授权数据都保存到数据库的三个表中。</p>
+<p>然而无论是保存到数据库的表，还是保存到文件，Yii都不会自动生成表和文件。都需要手动去初始化，去处理，后续还需要维护。</p>
+<p>在不进行任何配置时，Yii默认使用CPhpAuthManager，以文件的形式进行权限控制。<br>文件路径为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Yii::getPathOfAlias(&apos;application.data.auth&apos;).&apos;.php&apos;;</span><br><span class="line">//一般为 protected/data/auth.php</span><br></pre></td></tr></table></figure>
+<h2 id="授权-assign"><a href="#授权-assign" class="headerlink" title="授权 - assign"></a>授权 - assign</h2><p>为用户授权的操作（assignment），实际上是保存一个授权单位（AuthItem）和用户标识（userid）的关联关系。因此一个assignment中必然包含一个AuthItem和一个userid。</p>
+<p>以具体举例分析：<br>现在为创建文章（createPost）的操作创建一个operation。将整个文章管理（postManagement）功能当做一个task。将createPost当做postManagement的子项。<br>然后把postManagement的权限授予给userid为Tyler的用户。</p>
+<p>在siteController中创建如下action：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionRights</span><span class="params">()</span></span>&#123;</span><br><span class="line">	$authManager = Yii::app()-&gt;authManager;<span class="comment">//CPhpAuthManager对象</span></span><br><span class="line">	$operation = $authManager-&gt;createOperation(<span class="string">'createPost'</span>);</span><br><span class="line">	$task = $authManager-&gt;createTask(<span class="string">'postManagement'</span>);</span><br><span class="line">	$task-&gt;addChild(<span class="string">'createPost'</span>);</span><br><span class="line">	$authManager-&gt;assign(<span class="string">'postManagement'</span>, <span class="string">'Tyler'</span>);</span><br><span class="line">	$authManager-&gt;save();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于并没有配置AuthManager，因此Yii使用的是CPhpAuthManager。<br>该action最后一步将授权信息落地到auth.php文件中。<br>因此访问该action后，可看到授权文件内容如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">array</span> (</span><br><span class="line">  <span class="string">'createPost'</span> =&gt; </span><br><span class="line">  <span class="keyword">array</span> (</span><br><span class="line">    <span class="string">'type'</span> =&gt; <span class="number">0</span>,</span><br><span class="line">    <span class="string">'description'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">    <span class="string">'bizRule'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">    <span class="string">'data'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">  ),</span><br><span class="line">  <span class="string">'postManagement'</span> =&gt; </span><br><span class="line">  <span class="keyword">array</span> (</span><br><span class="line">    <span class="string">'type'</span> =&gt; <span class="number">1</span>,</span><br><span class="line">    <span class="string">'description'</span> =&gt; <span class="string">''</span>,</span><br><span class="line">    <span class="string">'bizRule'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">    <span class="string">'data'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">    <span class="string">'children'</span> =&gt; </span><br><span class="line">    <span class="keyword">array</span> (</span><br><span class="line">      <span class="number">0</span> =&gt; <span class="string">'createPost'</span>,</span><br><span class="line">    ),</span><br><span class="line">    <span class="string">'assignments'</span> =&gt; </span><br><span class="line">    <span class="keyword">array</span> (</span><br><span class="line">      <span class="string">'Tyler'</span> =&gt; </span><br><span class="line">      <span class="keyword">array</span> (</span><br><span class="line">        <span class="string">'bizRule'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">        <span class="string">'data'</span> =&gt; <span class="keyword">NULL</span>,</span><br><span class="line">      ),</span><br><span class="line">    ),</span><br><span class="line">  ),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="权限校验-checkAccess"><a href="#权限校验-checkAccess" class="headerlink" title="权限校验 - checkAccess"></a>权限校验 - checkAccess</h2><p>当Tyler访问创建文章的操作时，可通过authManager进行检查。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//PostController.php</span><br><span class="line">public function actionCreate()&#123;</span><br><span class="line">	$authManager = Yii::app()-&gt;authManager;</span><br><span class="line">	$user = Yii::app()-&gt;user;</span><br><span class="line"></span><br><span class="line">	//判断Tyler是否有createPost的权限</span><br><span class="line">	if(!$authManager-&gt;checkAccess(&apos;createPost&apos;, $user-&gt;id))&#123;</span><br><span class="line">		throw new CHttpException(403, &apos;forbidden&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码执行流程如下：</p>
+<ol>
+<li>根据当前登录用户的标识（userid）取出该用户所有授权（assignments） </li>
+<li>判断该AuthItem是否在该用户的授权列表中，如果存在，则权限校验通过。 </li>
+<li>如果不在授权中，则获取该AuthItem的父级AuthItem，判断父级AuthItem是否在授权中。如果在，则权限校验通过。不在则继续向上，判断各个父级AuthItem的父级AuthItem是否在用户授权中。 </li>
+<li>直到找不到更高级的AuthItem，则说明权限校验不通过。</li>
+</ol>
+<p>即：根据Tyler的assignments取出所有与Tyler有关联关系的AuthItem。可以取到postManagement。<br>然后判断createPost不在assignments中因此校验不通过。<br>继续找createPost的父级，可找到postManagement，在assignments中，因此最终校验通过。</p>
+<p>具体实现代码见：CPhpAuthManager.php的checkAccess()方法 及 CDbAuthManager.php的checkAccessRecursive()方法。</p>
+<p>Yii的CWebUser对checkAccess又封装了一层。<br>Yii::app()-&gt;user-&gt;checkAccess(‘createPost’); 基本等同于 Yii::app()-&gt;authManager-&gt;checkAccess(‘createPost’, Yii::app()-&gt;user-&gt;id);</p>
+<h2 id="CDbAuthManager"><a href="#CDbAuthManager" class="headerlink" title="CDbAuthManager"></a>CDbAuthManager</h2><p>如果用数据库来存储授权数据，需要先建表。<br> Yii自带了建表的sql，该文件在 framework/web/auth/schema.sql 该结构由三个表组成：</p>
+<ul>
+<li>AuthItem-存所有的储授权单位：role，task，operation</li>
+<li>AuthChild-存储AuthItem之间的父子关系</li>
+<li>AuthAssignment-存储授权记录：AuthItem，userId的关联关系</li>
+</ul>
+<p>虽然数据管理权限和文件管理权限的存储结构以及实现方式有所不同，但两者功能以及操作方式相同。</p>
+<p>另外，authManager还有其他的操作，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$authManager-&gt;createRole(&apos;editor&apos;);//创建角色</span><br><span class="line">$authManager-&gt;revoke(&apos;editor&apos;, &apos;Tyler&apos;);//取消授权</span><br><span class="line">$authManager-&gt;getAuthAssignments(&apos;Tyler&apos;);//获取用户所有授权</span><br><span class="line">//...</span><br></pre></td></tr></table></figure>
+<p>权限的设定和检查基本操作就是这样。然而这样的权限管理是没办法直接应用于生产环境的：</p>
+<ol>
+<li>AuthItem的管理操作要靠写代码</li>
+<li>assignment的管理操作要靠代码</li>
+<li>权限检查的操作太混乱，维护成本极高</li>
+</ol>
+<p>因此最好的解决的办法是：单独开发一套用于权限管理的模块，并且把权限验证做成自动化的。<br>目前已有现成的第三方module&mdash;&mdash;rights。<br> 理解了Yii的RBAC原理，可以更好的使用rights。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/yii/" rel="tag"># yii</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/coding/2016/06/yii-filter.html" rel="next" title="Yii中的过滤器-Filter">
+                <i class="fa fa-chevron-left"></i> Yii中的过滤器-Filter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/coding/2016/06/yii-accessControl.html" rel="prev" title="Yii的访问控制——accessControl">
+                Yii的访问控制——accessControl <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tyler</p>
+              <p class="site-description motion-element" itemprop="description">web开发 | javascript | js | php | node | nginx | mysql | linux</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#授权单位-AuthItem"><span class="nav-number">1.</span> <span class="nav-text">授权单位 - AuthItem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AuthManager"><span class="nav-number">2.</span> <span class="nav-text">AuthManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#授权-assign"><span class="nav-number">3.</span> <span class="nav-text">授权 - assign</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限校验-checkAccess"><span class="nav-number">4.</span> <span class="nav-text">权限校验 - checkAccess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDbAuthManager"><span class="nav-number">5.</span> <span class="nav-text">CDbAuthManager</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyler</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.1.0</div>
+
+
+
+
+<script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
