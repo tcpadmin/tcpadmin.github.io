@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Web开发笔记">
 <meta property="og:description" content="docker 搭建lnmp有两种方式  一个docker容器中集成mysql php nginx mysql nginx 和 php 各在一个容器，多容器联合工作">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-11T06:15:52.882Z">
+<meta property="og:updated_time" content="2019-03-12T00:07:00.511Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker搭个简单的lnmp环境">
 <meta name="twitter:description" content="docker 搭建lnmp有两种方式  一个docker容器中集成mysql php nginx mysql nginx 和 php 各在一个容器，多容器联合工作">
@@ -479,7 +479,7 @@
 <p>php连接数据库如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$pdo = new PDO(&apos;mysql:dbname=test;host=myDatabase;port=3306&apos;,&apos;root&apos;,&apos;&apos;); //此处的host是 mysql容器的name</span><br></pre></td></tr></table></figure></p>
 <p>docker-compose将几个docker连接到一个虚拟的局域网中，如果要访问某个docker可以直接访问其IP，但是IP一般不固定，所以改用<code>name</code>(如：php, myDatabase)</p>
 <h2 id="docker连接宿主机的mysql"><a href="#docker连接宿主机的mysql" class="headerlink" title="docker连接宿主机的mysql"></a>docker连接宿主机的mysql</h2><p>如果mysql单独运行，php代码要连接mysql就不能用name了，因为宿主机没有name</p>
-<p>首先查看容器的具体IP地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format &apos;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&apos; &lt;容器ID&gt;</span><br></pre></td></tr></table></figure></p>
+<p>首先查看容器的具体IP地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect &lt;容器ID&gt; | grep -i ip</span><br></pre></td></tr></table></figure></p>
 <p>宿主机IP与容器同网段，而且是<code>XXX.XXX.XXX.1</code><br>比如容器查出来ip是<code>192.169.0.2</code>,那么宿主机ip就是<code>192.168.0.1</code><br>在容器内，可以通过<code>192.168.0.1</code>访问宿主机</p>
 <p>PHP代码应该变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$pdo = new PDO(&apos;mysql:dbname=test;host=192.168.0.1;port=3306&apos;,&apos;root&apos;,&apos;&apos;);</span><br></pre></td></tr></table></figure></p>
 <p><strong>搭建Docker往往是辛苦一人，造福大家。</strong>无论是<code>Dockerfile</code>还是 <code>docker-compose.yml</code> 只要有一个人写出来，其他人只需要简单看一下就将结构和依赖能了然于心，并且将环境跑起来。</p>
