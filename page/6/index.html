@@ -368,6 +368,313 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/coding/2016/09/php-save-session.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/coding/2016/09/php-save-session.html" itemprop="url">PHP中session的保存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-08T00:00:00+08:00">2016-09-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>ini中关于session的配置一般为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">session.save_handler = &quot;files&quot;</span><br><span class="line">session.save_path = &quot;/tmp/session&quot;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/coding/2016/09/php-save-session.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="sudobash.cn/post/coding/2016/07/php-regular-advanced.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyler">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Web开发笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/coding/2016/07/php-regular-advanced.html" itemprop="url">PHP正则表达式中的高级用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-28T00:00:00+08:00">2016-07-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/coding/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-反向引用"><a href="#1-反向引用" class="headerlink" title="1.反向引用"></a>1.反向引用</h2><p>反向引用，也称逆向引用、向后引用，是指在正则表达式内部引用前面被捕获到的内容。</p>
+<p>这里有个概念：<strong>捕获</strong><br>捕获：这里的捕获是指将匹配的部分进行储存，可供以后使用。</p>
+<p>将一个正则表达式的全部或部分用括号包住，则匹配的过程中会将匹配成功的部分存储到一个临时缓冲区，捕获的每一个匹配都按照在正则表达式中从左到右遇到的内容存储。缓冲区的编号从1开始，直至99。在后面可以通过\1, \2, ${1}这样的形式引用被存储的匹配。 如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//匹配出引号中的内容</span><br><span class="line">$str = &lt;&lt;&lt;EOF</span><br><span class="line">&quot;Double quote&quot; and &apos;single quote&apos;</span><br><span class="line">EOF;</span><br><span class="line">preg_match_all( &quot;/(\&quot;|&apos;).*?\\1/&quot;, $str, $match); //此处\\1不能用$1 或者\$1 替代</span><br><span class="line">print_r($match);</span><br><span class="line">//结果</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] =&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] =&gt; &quot;Double quote&quot;</span><br><span class="line">            [1] =&gt; &apos;single quote&apos;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    [1] =&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] =&gt; &quot;</span><br><span class="line">            [1] =&gt; &apos;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">//或</span><br><span class="line">preg_match_all(&apos;/(&quot;|\&apos;).*?\1/&apos;, $str, $match);//此处\1不能用$1替代</span><br></pre></td></tr></table></figure></p>
+<p>第一种正则表达式写在双引号中，斜杠后面的字符会被转义，因此反向引用要用\1。第二种因为表达式写在单引号中，所以用\1。 此外，这里的反向引用都不能使用$1替代，$1用于下面的情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//div去掉属性</span><br><span class="line">$str = &lt;&lt;&lt;EOF</span><br><span class="line">&lt;div style=&quot;color:red;&quot;&gt;asdasdfasdasdfa&lt;/div&gt;</span><br><span class="line">EOF;</span><br><span class="line"></span><br><span class="line">echo preg_replace(&apos;#&lt;div[^&gt;]*&gt;(.*?)&lt;/div&gt;#i&apos;, &apos;&lt;div&gt;\1&lt;/div&gt;&apos;, $str);</span><br><span class="line">echo preg_replace(&apos;#&lt;div[^&gt;]*&gt;(.*?)&lt;/div&gt;#i&apos;, &apos;&lt;div&gt;$&#123;1&#125;&lt;/div&gt;&apos;, $str);</span><br><span class="line">echo preg_replace(&apos;#&lt;div[^&gt;]*&gt;(.*?)&lt;/div&gt;#i&apos;, &quot;&lt;div&gt;\$&#123;1&#125;&lt;/div&gt;&quot;, $str);</span><br></pre></td></tr></table></figure>
+<p>上述三者效果等同 推荐用${1}，因为如果后面需要跟数字，只有${1}能有效区别开来。 这里的preg_replace有一个很方便的正则使用方式：回调<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//去掉div标签，并去掉多余空白</span><br><span class="line">$str = &lt;&lt;&lt;EOF</span><br><span class="line">&lt;div style=&quot;color:red;&quot;&gt;    asdasdfasdasdfa&lt;/div&gt;</span><br><span class="line">EOF;</span><br><span class="line"></span><br><span class="line">//调用trim函数;注意引号和修正符e</span><br><span class="line">echo preg_replace(&apos;#&lt;div[^&gt;]*&gt;(.*?)&lt;/div&gt;#ie&apos;, &quot;trim(&apos;\$&#123;1&#125;&apos;)&quot;, $str);</span><br></pre></td></tr></table></figure></p>
+<p>上述正则表达式后追加一个修正符e，则在后面可以跟回调函数。需要注意引号的添加。</p>
+<h2 id="2-贪婪与非贪婪（懒惰与非懒惰）"><a href="#2-贪婪与非贪婪（懒惰与非懒惰）" class="headerlink" title="2.贪婪与非贪婪（懒惰与非懒惰）"></a>2.贪婪与非贪婪（懒惰与非懒惰）</h2><p>贪婪（非懒惰）表示尽可能多的匹配符合规范的字符串，非贪婪（懒惰）表示一旦遇到匹配的即停止。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// /a.*c/ 对字符串 abcccccccc 的匹配</span><br><span class="line">$str = &quot;abcccccccccccc&quot;;</span><br><span class="line"></span><br><span class="line">preg_match(&apos;/a.*c/&apos;, $str, $match);//贪婪模式下可匹配到整个字符串</span><br><span class="line">print_r($match);</span><br><span class="line">//结果</span><br><span class="line">array([0]=&gt;abcccccccccccc)</span><br><span class="line"></span><br><span class="line">preg_match(&apos;/a.*?c/&apos;, $str, $match);//懒惰模式下则只匹配最前面的abc</span><br><span class="line">print_r($match);</span><br><span class="line">//结果</span><br><span class="line">array([0]=&gt;abc)</span><br></pre></td></tr></table></figure></p>
+<p>php 正则修正符 U可控制贪婪与非贪婪的逆转，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// /a.*c/ 对字符串 abcccccccc 的匹配</span><br><span class="line">$str = &quot;abcccccccccccc&quot;;</span><br><span class="line"></span><br><span class="line">preg_match(&apos;/a.*c/U&apos;, $str, $match);//添加U后，由贪婪转为非贪婪</span><br><span class="line">print_r($match);</span><br><span class="line">//结果</span><br><span class="line">array([0]=&gt;abc)</span><br><span class="line"></span><br><span class="line">preg_match(&apos;/a.*?c/&apos;, $str, $match);//添加U后，由非贪婪转为贪婪</span><br><span class="line">print_r($match);</span><br><span class="line">//结果</span><br><span class="line">array([0]=&gt;abcccccccccccc)</span><br></pre></td></tr></table></figure>
+<p>在标签匹配中常常遇到此类问题。如匹配并列出各个a标签中的数据<a>.<em></em></a>标签会导致匹配出<a><a><a><a><a><a>这样的字符串，使用<a>.?</a>才能单独匹配</a></a></a></a></a></a></p>
+<h2 id="3-关于问号-的特殊用法"><a href="#3-关于问号-的特殊用法" class="headerlink" title="3.关于问号(?)的特殊用法"></a>3.关于问号(?)的特殊用法</h2><h3 id="非获取匹配"><a href="#非获取匹配" class="headerlink" title="非获取匹配"></a>非获取匹配</h3><p>有时出于某种需要，必须将某部分用圆括号包起来，又不想将其存储起来供以后使用，则需要用到 ?: 来消除圆括号的副作用，不缓存相关匹配。 如： <code>industr(?:y|ies)</code> 就是一个比 <code>industry|industries</code> 更简略的表达式。</p>
+<h3 id="正向预查与反-逆-向预查"><a href="#正向预查与反-逆-向预查" class="headerlink" title="正向预查与反(逆)向预查"></a>正向预查与反(逆)向预查</h3><p>这个描述有些困难，暂用实例说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&apos;/abc (?=1|2|3)/&apos;</span><br><span class="line">#能匹配 &quot;abc2asd&quot; 中的 &quot;abc&quot; ，但不能匹配 &quot;abcasd&quot; 中的 &quot;abc&quot;。</span><br><span class="line">#因为要求abc后面必须是1或2或3。</span><br><span class="line"></span><br><span class="line">&apos;/abc (?!1|2|3)/&apos;</span><br><span class="line">#不能匹配 &quot;abc2asd&quot; 中的 &quot;abc&quot; ，但能匹配 &quot;abcasd&quot; 中的 &quot;abc&quot;。</span><br><span class="line">#因为要求abc后面不能使1或2或3。</span><br></pre></td></tr></table></figure></p>
+<p>上述被称为正向预查。?后面的 ‘=’和’!’ 分别表示’是’和’非’</p>
+<p>反向预查表示向前判断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;/(?&lt;=1|2)abc/ &apos;</span><br><span class="line">#能匹配 &apos;2abcd &apos;中的 abc， 但是不能匹配 3abcd 中的 abc</span><br><span class="line">&apos;/(?&lt;!1|2)abc/&apos;</span><br><span class="line">#不能匹配 &apos;2abcd &apos;中的 abc， 但是能匹配 3abcd 中的 abc</span><br></pre></td></tr></table></figure></p>
+<p>以上用到的四个符号分别是 ?=, ?! ?&lt;=, ?&lt;!。其中&lt;表示向左即向前，=表示’是’，!表示’非’</p>
+<blockquote>
+<p>正反向预查使用括号都是<strong>非获取匹配</strong>，匹配结果不会被缓存。并且，<strong>预查都不消耗字符串</strong>。如： <code>&#39;/abc (?=1|2|3)/&#39;</code> 匹配 abc2asd 的 abc 之后， 下一次匹配从2开始，而不是从2之后的a开始</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="sudobash.cn/post/coding/2016/07/php-regular-express.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1586,7 +1893,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">58</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1718,7 +2025,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">42</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
